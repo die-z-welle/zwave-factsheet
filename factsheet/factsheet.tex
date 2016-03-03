@@ -20,7 +20,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \linespread{1.3}
 
 \newcommand{\linia}{\rule{\linewidth}{0.5pt}}
-
+\renewcommand{\arraystretch}{1.5}
 \makeatletter
 \renewcommand{\maketitle}{
 \begin{center}
@@ -34,7 +34,7 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \end{center}
 }
 \makeatother
-%%%
+
 \usepackage{fancyhdr}
 \pagestyle{fancy}
 \lhead{}
@@ -47,35 +47,6 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \renewcommand{\footrulewidth}{0pt}
 %
 
-% code listing settings
-\usepackage{listings}
-\lstset{
-    language=Python,
-    basicstyle=\ttfamily\small,
-    aboveskip={1.0\baselineskip},
-    belowskip={1.0\baselineskip},
-    columns=fixed,
-    extendedchars=true,
-    breaklines=true,
-    tabsize=4,
-    prebreak=\raisebox{0ex}[0ex][0ex]{\ensuremath{\hookleftarrow}},
-    frame=lines,
-    showtabs=false,
-    showspaces=false,
-    showstringspaces=false,
-    keywordstyle=\color[rgb]{0.627,0.126,0.941},
-    commentstyle=\color[rgb]{0.133,0.545,0.133},
-    stringstyle=\color[rgb]{01,0,0},
-    numbers=left,
-    numberstyle=\small,
-    stepnumber=1,
-    numbersep=10pt,
-    captionpos=t,
-    escapeinside={\%*}{*)}
-}
-
-%%%----------%%%----------%%%----------%%%----------%%%
-
 \begin{document}
 
 \title{Z-Wave Factsheet}
@@ -87,17 +58,16 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 \maketitle
 
 \section*{Generell}
-{\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{| p{3.5cm} | p{10cm} |}
-		\hline
-		\textbf{Einsatzgebiet} & Home-Automation \\\hline
-		\textbf{Topologie} & Mesh \\\hline
-		\textbf{Range} & bis zu 100m zwischen 2 Nodes \\\hline
-		\textbf{Maximaler Range} & Durchschnittlich 200m (Weiterleitung über 4 Hops) \\\hline
-		\textbf{Anzahl Geräte pro Netzwerk} & 232 \\\hline
-		
-	\end{tabular}
-}
+\begin{tabular}{| p{3.5cm} | p{10cm} |}
+	\hline
+	\textbf{Einsatzgebiet} & Home-Automation \\\hline
+	\textbf{Topologie} & Mesh \\\hline
+	\textbf{Range} & bis zu 100m zwischen 2 Nodes \\\hline
+	\textbf{Maximaler Range} & Durchschnittlich 200m (Weiterleitung über 4 Hops) \\\hline
+	\textbf{Anzahl Geräte pro Netzwerk} & 232 \\\hline
+	
+\end{tabular}
+
 \subsection*{Gerätetypen}
 \begin{itemize}
  \item Elektrische Schalter (ergänzend oder Ersatz für physischen Schalter)
@@ -112,40 +82,46 @@ bindingoffset=0mm, top=20mm,bottom=20mm}
 
 \subsection*{Netzwerk-Informationen}
 Ein Netzwerk besteht jeweils aus einem (oder in Spezialfällen aus mehreren) Controller und mehreren Slaves. Die Komponenten können über eine HomeID und NodeID eindeutig identifiziert werden.\\\\
-{\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{| p{3.5cm} | p{10cm} |}
-		\hline
-		\textbf{HomeID} & 32bit; Hersteller weist dem Controller eine ID zu, der die HomeID des Netzwerks bestimmt\\\hline
-		\textbf{NodeID} & 8bit; Controller weist allen Slaves eine NodeID zu\\\hline
-	\end{tabular}
-}
+\begin{tabular}{| p{3.5cm} | p{10cm} |}
+	\hline
+	\textbf{HomeID} & 32bit; Hersteller weist dem Controller eine ID zu, der die HomeID des Netzwerks bestimmt\\\hline
+	\textbf{NodeID} & 8bit; Controller weist allen Slaves eine NodeID zu\\\hline
+\end{tabular}
 
 \section*{Protokoll-Spezifikationen}
 
 \subsection*{Physical Layer}
-{\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{| p{3.5cm} | p{10cm} |}
-		\hline
-		\textbf{Datenübertragungs-rate} & 9.6kbps / 40kbps / 100kbps\\\hline
-		\textbf{Frequenz} &  {\textbf{Europa}: 868.42 MHz; \textbf{USA}: 908.42 MHz} \\\hline
-		\textbf{Encoding} & Machester (9.6kbps) / NRZ (40kbps / 100kbps) \\\hline
-		\textbf{Maximaler Range} & Durchschnittlich 200m (Weiterleitung über 4 Hops) \\\hline
-		\textbf{Anzahl Geräte pro Netzwerk} & 232 \\\hline
-	\end{tabular}
-}
+\begin{tabular}{| p{3.5cm} | p{10cm} |}
+	\hline
+	\textbf{Datenübertragungs-rate} & 9.6kbps / 40kbps / 100kbps\\\hline
+	\textbf{Frequenz} &  {\textbf{Europa}: 868.42 MHz; \textbf{USA}: 908.42 MHz} \\\hline
+	\textbf{Encoding} & Machester (9.6kbps) / NRZ (40kbps / 100kbps) \\\hline
+	\textbf{Maximaler Range} & Durchschnittlich 200m (Weiterleitung über 4 Hops) \\\hline
+	\textbf{Anzahl Geräte pro Netzwerk} & 232 \\\hline
+\end{tabular}
+
+\subsection*{Application Layer}
+\subsubsection*{Command classes}
+Z-Wave kommuniziert den Geräten, unabhängig von deren Funktionalität, Kommandos über 3 verschiedene ``Command classes``. Die Interpretation des übertragenen Kommandos ist dann den Geräten überlassen.\\\\
+\begin{tabular}{| c | c | p{6cm} |}
+	\hline
+	\textbf{Name} & \textbf{Wertrange}& \textbf{Funktion}\\\hline
+	SET & 0 - 255 & Setzen eines Wertes \\\hline
+	GET & - & Anfrage des aktuell eingestellten Wertes \\\hline
+	REPORT & 0-255 & Response mit aktuellem Wert auf GET-Request\\\hline
+\end{tabular}
+~
+\newpage
 
 \subsection*{Security}
-{\renewcommand{\arraystretch}{1.5}
-	\begin{tabular}{| p{3.5cm} | p{10cm} |}
-		\hline
-		\textbf{Preshared Key} & 128bit Network Key; Von Controller generiert\\\hline
-		\textbf{Cipher \& MAC-Keys} & 128bit; Von Netzwerk Key abgeleitet\\\hline
-		\textbf{None} & 64bit; Gegen Replay-Attacken\\\hline
-		\textbf{Encryption} & AES-OFB\\\hline
-		\textbf{Data-Authentication} & AES-CBCMAC\\\hline
-	\end{tabular}
-}
-
+\begin{tabular}{| p{3.5cm} | p{10cm} |}
+	\hline
+	\textbf{Preshared Key} & 128bit Network Key; Von Controller generiert\\\hline
+	\textbf{Cipher \& MAC-Keys} & 128bit; Von Netzwerk Key abgeleitet\\\hline
+	\textbf{None} & 64bit; Gegen Replay-Attacken\\\hline
+	\textbf{Encryption} & AES-OFB\\\hline
+	\textbf{Data-Authentication} & AES-CBCMAC\\\hline
+\end{tabular}
 
 \subsection*{Frame}
 \begin{figure}[h!t]
