@@ -1,0 +1,40 @@
+Z-WAVE
+----------
+Fehlt noch:
+- Bandbreite / ISM?
+o Modulationsverfahren / Zugriffsverfahren (Multiplex)
+o Fehlervermeidung / Bandspreizung
+o Umgang mit Fehlern / Zuverlässigkeit / QoS
+o Roaming / Mobilität
+o Positionierung im OSI Referenzmodell
+
+
+Mehr schreiben über:
+-Transport/Network Layer
+
+---------- Notizen Valentin:
+
+Merkmale:
+- Geringer Energieverbrauch
+- Hohe Kommunikationssicherheit
+- Gröste Systemplatform interoperabler funkbasierter Produkte
+- Propritäres Protkoll
+
+
+Kostenpunkt: (Schweizer Shop: http://shop.tecmatic.ch)
+Controller: 139 CHF (http://shop.tecmatic.ch/de/controller/351-hausautomation-controller-z-wave-plus-vera-edge.html)
+Controller eigenbau: Raspberry 2 (46.60 CHF) + RaZberry (59 CHF)
+Kosten für Sensoren noch hinzufügen
+
+
+Modulationsverfahren: GFSK
+
+
+
+Transport Layer:
+-Error Detection & Retransmission
+-Acknowedgement
+
+
+
+
