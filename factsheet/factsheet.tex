@@ -86,9 +86,12 @@ Ein Netzwerk besteht jeweils aus einem (oder in Spezialfällen aus mehreren) Con
 	\hline
 	\textbf{HomeID} & 32bit; Hersteller weist dem Controller eine ID zu, der die HomeID des Netzwerks bestimmt\\\hline
 	\textbf{NodeID} & 8bit; Controller weist allen Slaves eine NodeID zu\\\hline
-\end{tabular}
+\end{tabular}~\newpage
 
 \section*{Protokoll-Spezifikationen}
+\begin{figure}[h!t]
+	\includegraphics[width=\textwidth]{images/frame.png}
+\end{figure}
 
 \subsection*{Physical Layer}
 \begin{tabular}{| p{3.5cm} | p{10cm} |}
@@ -118,15 +121,10 @@ Z-Wave kommuniziert den Geräten, unabhängig von deren Funktionalität, Kommand
 	\hline
 	\textbf{Preshared Key} & 128bit Network Key; Von Controller generiert\\\hline
 	\textbf{Cipher \& MAC-Keys} & 128bit; Von Netzwerk Key abgeleitet\\\hline
-	\textbf{None} & 64bit; Gegen Replay-Attacken\\\hline
+	\textbf{Nonce} & 64bit; Gegen Replay-Attacken\\\hline
 	\textbf{Encryption} & AES-OFB\\\hline
 	\textbf{Data-Authentication} & AES-CBCMAC\\\hline
 \end{tabular}
-
-\subsection*{Frame}
-\begin{figure}[h!t]
-	\includegraphics[width=\textwidth]{images/frame.png}
-\end{figure}
 
 \section*{Eignung im Bereich IoT}
 \subsection*{Energieverbrauch}
