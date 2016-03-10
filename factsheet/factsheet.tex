@@ -103,7 +103,27 @@ Ein Netzwerk besteht jeweils aus einem (oder in Spezialfällen aus mehreren) Con
 	\textbf{Anzahl Geräte pro Netzwerk} & 232 \\\hline
 \end{tabular}
 
+\subsection*{Transport Layer}
+Zuständig für Retransmission, Packet acknowledgement, Packet origin authentication und Node-Wakeups. Auf dieser Schicht werden folgende Informationen übermittelt:\\
+\begin{tabular}{| c | c | p{10cm} |}
+	\hline
+	\textbf{Information} & \textbf{Grösse}& \textbf{Funktion}\\\hline
+	HomeID & 32bit & Identifikation des Netzwerks \\\hline
+	Source NodeID & 8bit & NodeID der Quelle \\\hline
+	Frame-Typ & 8bit & Gibt an, ob es sich um Singlecast, Multicast oder Broadcast handelt\\\hline
+	Control Flag & ? & Flag für Lowpower etc.\\\hline
+	Payload length & 8bit & Länge der Payload\\\hline
+	Destination NodeID & 8bit & NodeID des Ziels \\\hline
+	Authentication Header & 8 Byte & Origin Authentication Header, falls in Secure Transmission Mode\\\hline
+	Checksumme & 8bit & Checksumme des Frames (für Integritätschecks)\\\hline
+\end{tabular}
+
+\subsection*{Netzwork Layer}
+Unter anderem zuständig für Netzwerk-Discovery und Routing. Geräte die direkt an eine Stromquelle angeschlossen sind, können als Packet-Repeater dienen (keine batteriebetriebenen Geräte).
+
 \subsection*{Application Layer}
+Parst die Frame-Payload und entschlüsselt die enthaltenen Informationen mit dem Shared-Secret.
+
 \subsubsection*{Command classes}
 Z-Wave kommuniziert den Geräten, unabhängig von deren Funktionalität, Kommandos über 3 verschiedene ``Command classes``. Die Interpretation des übertragenen Kommandos ist dann den Geräten überlassen.\\\\
 \begin{tabular}{| c | c | p{6cm} |}
@@ -117,14 +137,31 @@ Z-Wave kommuniziert den Geräten, unabhängig von deren Funktionalität, Kommand
 \newpage
 
 \subsection*{Security}
-\begin{tabular}{| p{3.5cm} | p{10cm} |}
+\subsubsection*{Key-Exchange}
+Das Bestimmen eines Shared-Keys von Controller und Node findet während des intialen Pairing statt und läuft wie folgt ab:
+\begin{enumerate}
+	\item Controller generiert Encryption Key $K_{n}$ für Key-Exchange (Pro Netzwerk einmal generiert)
+	\item Controller verschlüsselt $K_{n}$ mit einem temporären default Key (hardcoded, aus Firmware)
+	\item Übertragung an Node
+	\item Node entschlüsselt $K_{n}$ mit default Key aus Firmware
+\end{enumerate}~\\
+Mit dem erhaltenen Schlüssel werden zwei weitere Keys, der Frame-Encryption-Key $K_{c}$ und der Data-Origin-Authentication-Key $K_{m}$, ausgemacht:
+\begin{figure}[h!t]
+	\centering
+	\large
+	$K_{c} = AES-ECB_{K_{n}}(Password_{c})$\\
+	$K_{m} = AES-ECB_{K_{n}}(Password_{m})$
+\end{figure}~\\
+$Password_{c}$ und $Passwort_{m}$ sind fest in der Firmware hinterlegte Werte.
+\\\\
+Übersicht:\\\\
+\begin{tabular}{| p{6cm} | p{8cm} |}
 	\hline
-	\textbf{Preshared Key} & 128bit Network Key; Von Controller generiert\\\hline
-	\textbf{Cipher \& MAC-Keys} & 128bit; Von Netzwerk Key abgeleitet\\\hline
+	\textbf{Preshared Encryption Key $K_{n}$} & 128bit; Von Controller bei Netwerk-Setup generiert\\\hline
+	\textbf{Data-Encryption-Key $K_{c}$} & 128bit; Wird im AES-OFB-Algorithmus zur Verschlüsselung eines Frames verwendet\\\hline
+	\textbf{Data-Origin-Authentication-Key $K_{m}$} & 128bit; Key für das Frame-Hashing mit AES-CBCMAC\\\hline
 	\textbf{Nonce} & 64bit; Gegen Replay-Attacken\\\hline
-	\textbf{Encryption} & AES-OFB\\\hline
-	\textbf{Data-Authentication} & AES-CBCMAC\\\hline
-\end{tabular}
+\end{tabular}~\newpage
 
 \section*{Eignung im Bereich IoT}
 \subsection*{Energieverbrauch}
