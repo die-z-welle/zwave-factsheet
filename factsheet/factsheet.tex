@@ -145,6 +145,7 @@ Das Bestimmen eines Shared-Keys von Controller und Node findet während des inti
 	\item Übertragung an Node
 	\item Node entschlüsselt $K_{n}$ mit default Key aus Firmware
 \end{enumerate}~\\
+Für die Übertragung werden zusätzlich 64bit Noncen ausgetauscht, womit Replay-Attacken vorgebeugt wird.
 Mit dem erhaltenen Schlüssel werden zwei weitere Keys, der Frame-Encryption-Key $K_{c}$ und der Data-Origin-Authentication-Key $K_{m}$, ausgemacht:
 \begin{figure}[h!t]
 	\centering
